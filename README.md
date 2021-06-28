@@ -9,5 +9,5 @@ The only requirement to use the app is stable internet connection and Windows op
 
 ## Using the app
 1. Find the ChestChecker.exe file in the folder.
-2. Open the app and provide your League of Legends username and click `Go`.
+2. Open the app, provide your League of Legends username and click `Go`.
 3. Now you can see all the information you need.
