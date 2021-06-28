@@ -11,3 +11,4 @@ The only requirement to use the app is stable internet connection and Windows op
 1. Find the ChestChecker.exe file in the folder.
 2. Open the app, provide your League of Legends username and click `Go`.
 3. Now you can see all the information you need.
+4. If a champion isn't visible in the app means that player doesn't own it.
