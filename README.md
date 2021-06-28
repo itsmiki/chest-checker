@@ -4,7 +4,7 @@ The only requirement to use the app is stable internet connection and Windows op
 
 ## Downloading and decompressing
 1. Download the ***ChestChecker v1.0.7z*** file.
-2. Decompress using 7z program. (Download it here: https://www.7-zip.org/download.html)
+2. Decompress using 7-zip program. (Download it here: https://www.7-zip.org/download.html)
 3. To decompress just right click on the file and use the right option.
 
 ## Using the app
