@@ -2,7 +2,7 @@ from requests.models import Response
 from riotwatcher import LolWatcher
 import asyncio
 
-api_key = 'RGAPI-131123aa-999a-4857-aa6b-d8601ba1bfdc'
+api_key = 'secret_api_key'
 lol_watcher = LolWatcher(api_key)
 
 miki = "uX0sDT_aEj4CzpYItA-aGDtRXFagBvcR2E5-ZlIUyUWZY0U"
