@@ -5,6 +5,15 @@ import asyncio
 
 from requests.sessions import session
 
+def return_variable_not_list(function):
+    def inside():
+        temp_list = []
+        function(temp_list)
+        variable = temp_list[0]
+        return variable
+    return inside
+
+
 def get_champions_owned(champions):
     connector = Connector()
 
@@ -33,10 +42,6 @@ def get_champions_owned(champions):
     connector.start()
 
 
-# lista = []
-# get_champions_owned(lista)
-# print(lista)
-
 def get_pickable_champions_aram(champions):
     connector = Connector()
 
@@ -47,7 +52,7 @@ def get_pickable_champions_aram(champions):
         try:
             session_raw = await connection.request('get', '/lol-champ-select/v1/session')
             session_json = await session_raw.json()
-            print(session_json)
+            # print(session_json)
 
             for id in session_json['benchChampionIds']:
                 if id not in champions:
@@ -70,8 +75,8 @@ def get_pickable_champions_aram(champions):
     # starts the connector
     connector.start()
 
-
-def check_if_aram_lobby():
+@return_variable_not_list
+def check_if_aram_lobby(checking_bit):
     connector = Connector()
 
     # fired when LCU API is ready to be used
@@ -81,32 +86,20 @@ def check_if_aram_lobby():
             session = await connection.request('get', '/lol-champ-select/v1/session')
             session_json = await session.json()
             if session_json['benchEnabled'] == True:
-                return True
+                checking_bit.append(True)
             else:
-                print('False1')
-                return False
+                checking_bit.append(False)
         except:
-            return False
+            checking_bit.append(False)
 
     # fired when League Client is closed (or disconnected from websocket)
     @connector.close
     async def disconnect(_):
-        print('The client have been closed!')
+        #print('The client have been closed!')
         await connector.stop()
 
     # starts the connector
     connector.start()
-
-
-lista = []
-
-
-# a = time.time()
-check_if_aram_lobby()
-# b = time.time()
-# print(b-a)
-
-
 
 
 def get_pickable_champions_aram_continuous(champions):
@@ -166,16 +159,15 @@ def get_pickable_champions_aram_continuous(champions):
         # f.write(xd2)
         # f.close()
 
-# get_pickable_champions_aram_continuous(lista)
-# print(lista)
 
-def get_summoner_name():
+@return_variable_not_list
+def get_summoner_name(summonerName):
     connector = Connector()
 
     # fired when League Client is closed (or disconnected from websocket)
     @connector.close
     async def disconnect(_):
-        print('The client have been closed!')
+        #print('The client have been closed!')
         await connector.stop()
 
     # fired when LCU API is ready to be used
@@ -183,17 +175,70 @@ def get_summoner_name():
     async def connect(connection):
         session = await connection.request('get', '/lol-summoner/v1/current-summoner')
         session_json = await session.json()
-        print(session_json['displayName'])
+        summonerName.append(session_json['displayName'])
 
 
     # starts the connector
     connector.start()
+
+
+def test():
+    from random import randint
+
+    connector = Connector()
+    async def set_random_icon(connection):
+        # random number of a chinese icon
+        random_number = randint(50, 78)
+        # make the request to set the icon
+        icon = await connection.request('put', '/lol-summoner/v1/current-summoner/icon',
+        data={'profileIconId': random_number})
+        # if HTTP status code is 201 the icon was applied successfully
+        if icon.status == 201:
+            print(f'Chinese icon number {random_number} was set correctly.')
+        else:
+            print('Unknown problem, the icon was not set.')
+
+        # fired when LCU API is ready to be used
+    @connector.ready
+    async def connect(connection):
+        print('LCU API is ready to be used.')
+        # check if the user is already logged into his account
+        summoner = await connection.request('get', '/lol-summoner/v1/current-summoner')
+        if summoner.status != 200:
+            print('Please login into your account to change your icon and restart the script...')
+        else:
+            print('Setting new icon...')
+        await set_random_icon(connection)
+        
+        # fired when League Client is closed (or disconnected from websocket)
+    @connector.close
+    async def disconnect(_):
+        print('The client have been closed!')
+    # starts the connector
     
+    connector.start()
+
+@return_variable_not_list
+def get_summoner_icon_id(iconId):
+    connector = Connector()
+
+    # fired when League Client is closed (or disconnected from websocket)
+    @connector.close
+    async def disconnect(_):
+        #print('The client have been closed!')
+        await connector.stop()
+
+    # fired when LCU API is ready to be used
+    @connector.ready
+    async def connect(connection):
+        session = await connection.request('get', '/lol-summoner/v1/current-summoner')
+        session_json = await session.json()
+        iconId.append(session_json['profileIconId'])
 
 
-print(get_summoner_name())
+    # starts the connector
+    connector.start()
 
-    # summoner_info_raw = connector.connection.request('get', '/lol-summoner/v1/current-summoner')
-    # summoner_name = summoner_info_raw.json()
-    # print(summoner_name['displayName'])
-    # print(summoner_name['internalName'])
+
+
+# print(get_summoner_name())
