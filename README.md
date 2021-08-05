@@ -3,7 +3,7 @@ This program lets you check what champions you can still earn chest with.
 The only requirement to use the app is stable internet connection and Windows operating system.
 
 ## Downloading and decompressing
-1. Download the ***ChestChecker v1.2.zip***.
+1. Download the ***ChestChecker v1.3.zip***.
 2. If you chose *.exe* file you can skip the next steps.
 3. Decompress using 7-zip program or other program. (Download it here: https://www.7-zip.org/download.html)
 4. To decompress just right click on the file and use the right option.
