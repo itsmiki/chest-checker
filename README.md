@@ -1,4 +1,4 @@
-# ChestChecker v1.2
+# ChestChecker v1.3
 This program lets you check what champions you can still earn chest with.
 The only requirement to use the app is stable internet connection and Windows operating system.
 
