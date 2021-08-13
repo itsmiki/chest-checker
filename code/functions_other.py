@@ -1,5 +1,4 @@
-from functions_lcu import get_champions_owned, get_summoner_name
-import psutil, time
+import psutil, time, asyncio
 
 def check_if_LeagueClient_is_active():
     '''
@@ -19,7 +18,20 @@ def check_if_LeagueClient_is_active():
             pass
     return False
 
-print(check_if_LeagueClient_is_active())
+
+import re
+from subprocess import check_output
+
+
+def find_LoL_path():
+    output = check_output("wmic PROCESS WHERE name='LeagueClientUx.exe' GET commandline", shell=True).decode()
+    return re.search(r'--install-directory=(.*?)" ', output).group(1)
+
+def get_port_and_password(path):
+    f = open(path + '\lockfile', 'r')
+    lista = f.read().split(":")
+    return lista[2], lista[3]
+
 
 
 

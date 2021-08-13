@@ -241,4 +241,33 @@ def get_summoner_icon_id(iconId):
 
 
 
-# print(get_summoner_name())
+# print(get_summoner_icon_id())
+
+
+@return_variable_not_list
+def get_how_many_chests_available(number):  # nie działa ta funkcja
+    connector = Connector()
+
+    # fired when League Client is closed (or disconnected from websocket)
+    @connector.close
+    async def disconnect(_):
+        #print('The client have been closed!')
+        await connector.stop()
+
+    # fired when LCU API is ready to be used
+    @connector.ready
+    async def connect(connection):
+        session = await connection.request('get', '/lol-collections​/v1​/inventories​/chest-eligibility')
+        session_json = await session.json()
+        print(session_json)
+        # iconId.append(session_json['profileIconId'])
+        #number.append(session_json['earnableChests'])
+        number.append(1) 
+        
+
+
+    # starts the connector
+    connector.start()
+
+
+# print(get_how_many_chests_available())
